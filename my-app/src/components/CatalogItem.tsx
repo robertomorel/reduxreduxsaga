@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { addProductToCart } from '../store/modules/cart/actions';
+import { addProductToCartRequest } from '../store/modules/cart/actions';
 import { IProduct } from '../store/modules/cart/types';
 
 interface ICatalogItemProps {
@@ -11,7 +11,7 @@ const CatalogItem: React.FC<ICatalogItemProps> = ({ product }) => {
   const dispatch = useDispatch();
   
   const handleAddProductToCart = useCallback(() => {
-    dispatch(addProductToCart(product));
+    dispatch(addProductToCartRequest(product));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, product]);
   
