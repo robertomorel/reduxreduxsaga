@@ -20,6 +20,7 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { IState } from '../..';
 import api from '../../../services/api';
 import { addProductToCartFailure, addProductToCartRequest, addProductToCartSuccess } from './actions';
+import { ActionTypes } from './types';
 
 type CheckProductStockRequest = ReturnType<typeof addProductToCartRequest>;
 
@@ -65,5 +66,5 @@ export default all([
    * Params: Qual action será ouvida
    *         Qual função será disparada
    */
-  takeLatest('ADD_PRODUCT_TO_CART_REQUEST', checkProductStock)
+  takeLatest(ActionTypes.addProductToCartRequest, checkProductStock)
 ]);

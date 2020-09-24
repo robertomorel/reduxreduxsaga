@@ -5,10 +5,11 @@
 import { Reducer } from "redux";
 // -- Produzir um novo estado, a partir de um estado anterior
 import produce from 'immer';
-import { ICartState } from "./types";
+import { ActionTypes, ICartState } from "./types";
 
 const INITIAL_STATE: ICartState = {
-  items: []
+  items: [],
+  failedStockCheck: [],
 }
 
 const cart: Reducer<ICartState> = (state = INITIAL_STATE, action) => {
@@ -18,7 +19,7 @@ const cart: Reducer<ICartState> = (state = INITIAL_STATE, action) => {
   return produce(state, draft => {
     switch(action.type) {
       //case 'ADD_PRODUCT_TO_CART': {
-      case 'ADD_PRODUCT_TO_CART_SUCCESS': {
+      case ActionTypes.addProductToCartSuccess: {
         const { product } = action.payload;
 
         const productInCartIndex = draft.items.findIndex(item => 
@@ -48,7 +49,9 @@ const cart: Reducer<ICartState> = (state = INITIAL_STATE, action) => {
 
        break;
       }
-      case 'ADD_PRODUCT_TO_CART_FAILURE': {
+      case ActionTypes.addProductToCartFailure: {
+        //console.log(`Sem estoque. Id: ${JSON.stringify(action.payload, null, 2)}`);
+        draft.failedStockCheck.push(action.payload.productId);
         break;
       }  
       default: {
