@@ -5,12 +5,15 @@ import { ICartItem } from '../store/modules/cart/types';
 
 const Cart: React.FC = () => {
   const cart = useSelector<IState, ICartItem[]>(state => state.cart.items);
+  //console.log(JSON.stringify(cart, null, 2));
 
   return (
-    <table>
+    <table
+      data-testid="cart-container"
+    >
       <thead>
         <tr>
-          <th>Product</th>
+          <th>Produto</th>
           <th>Preço</th>
           <th>Quantidade</th>
           <th>Subtotal</th>
@@ -18,7 +21,7 @@ const Cart: React.FC = () => {
       </thead>
 
       <tbody>
-        {cart.map(item => (
+        {cart && cart.map(item => (
           <tr key={item.product.id}>
             <td>{item.product.title}</td>
             <td>{item.product.price}</td>
