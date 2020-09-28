@@ -9,6 +9,7 @@ interface ICatalogItemProps {
 }
 
 const CatalogItem: React.FC<ICatalogItemProps> = ({ product }) => {
+  console.log(JSON.stringify(product, null, 2));
   const dispatch = useDispatch();
   const hasFailedStockCheck = useSelector<IState, boolean>(state => {
     return state.cart.failedStockCheck.includes(product.id);
@@ -20,13 +21,16 @@ const CatalogItem: React.FC<ICatalogItemProps> = ({ product }) => {
   }, [dispatch, product]);
   
   return (
-    <article>
+    <article
+      data-testid="catalog-item-container"
+    >
       <strong>{product.title}</strong> {" - "}
       <span>{product.price}</span> {"  "}
 
       <button 
         type="button"
         onClick={handleAddProductToCart}
+        placeholder='Comprar'
       >
         Comprar
       </button>

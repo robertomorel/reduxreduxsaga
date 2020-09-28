@@ -1,55 +1,77 @@
 import React from 'react';
-import Cart from '../../components/Cart';
-import { render } from '@testing-library/react';
-import { useSelector } from 'react-redux';
-import getCarts from '../../utils/mocks/getCarts.json';
+import { render, fireEvent } from '@testing-library/react';
+import { useSelector, useDispatch } from 'react-redux';
+import CatalogItem from '../../components/CatalogItem';
 
 const mockUseSelector = useSelector as jest.Mock;
+const mockUseDispatch = jest.fn();
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
+  useDispatch: () => mockUseDispatch,
 }));
 
+const product = {
+  "id": 1,
+  "title": "Casaco maneiro",
+  "price": 290.9
+};
+
 describe('CatalogItem component', () => {
-  /*
-    beforeEach(() => {
-    mockUseSelector.mockImplementation(() => getCarts);
-    });
-    afterEach(() => {
-      mockUseSelector.mockClear();
-    });
-  */
-  beforeAll(() => {
-    mockUseSelector.mockImplementation(() => getCarts);
-  })
-  
-  it('should render the Cart component correctly', () => {
+  beforeEach(() => {
+    mockUseSelector.mockClear();
+  });
+
+  it('should render the CatalogItem component correctly', () => {
     const { getByTestId } = render(
-      <Cart />,
+      <CatalogItem 
+        product={product} 
+      />,
     );
 
-    expect(getByTestId('cart-container')).toBeTruthy();
+    expect(getByTestId('catalog-item-container')).toBeTruthy();
   });
 
-  it('should be able to render the table header', () => {
+  it('should be able to show a product detail', () => {
     const { getByText } = render(
-      <Cart />,
-    );
-
-    expect(getByText('Produto')).toBeTruthy();
-    expect(getByText('Preço')).toBeTruthy();
-    expect(getByText('Quantidade')).toBeTruthy();
-    expect(getByText('Subtotal')).toBeTruthy();
-  });
-
-  it('should be able to render the carts details', () => {
-    const { getByText } = render(
-      <Cart />,
+      <CatalogItem 
+        product={product} 
+      />,
     );
 
     expect(getByText('Casaco maneiro')).toBeTruthy();
     expect(getByText('290.9')).toBeTruthy();
-    expect(getByText('Tênis da moda')).toBeTruthy();
-    expect(getByText('500')).toBeTruthy();
   });
+
+  it('should be able to show a product detail with error', () => {
+    mockUseSelector.mockImplementation(() => true);
+
+    const { getByText } = render(
+      <CatalogItem 
+        product={product} 
+      />,
+    );
+
+    expect(getByText('Falta de estoque')).toBeTruthy();
+  });
+
+  /*
+  it('should be able to click on Comprar button and handle it correctly', () => {
+    const mockedDispatch = jest.fn();
+    useDispatch.mockReturnValue(mockedDispatch);
+
+    const { getByPlaceholderText } = render(
+      <CatalogItem 
+        product={product} 
+      />,
+    )
+
+    const spy = jest.spyOn(React, 'useCallback');
+
+    const inputElement = getByPlaceholderText('Comprar');
+    fireEvent.click(inputElement);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+  */
 });
