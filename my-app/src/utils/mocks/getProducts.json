@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "Casaco maneiro",
+    "price": 290.9
+  },
+  {
+    "id": 2,
+    "title": "Óculos barato",
+    "price": 20.9
+  },
+  {
+    "id": 3,
+    "title": "Tênis da moda",
+    "price": 500
+  }
+]

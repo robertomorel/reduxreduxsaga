@@ -14,24 +14,30 @@ const Catalog: React.FC = () => {
   */
   const [catalog, setCatalog] = useState<IProduct[]>([]);
 
-  useEffect(() => {
+  const findCatalog = () => {
     api.get('products').then(response => {
       setCatalog(response.data);
-    })
-  }, [catalog]);
+    });
+  }
+
+  useEffect(() => {
+    findCatalog();
+  }, []);
+
+  console.log(JSON.stringify(catalog, null, 2));
 
   return (
     <main
       data-testid="catalog-container"
     >
-    <h1>Catalog</h1>
+      <h1>Catalog</h1>
 
-    {catalog.map(product => (
-      <CatalogItem 
-        key={product.id}
-        product={product} 
-      />
-    ))}
+      {catalog.map(product => (
+        <CatalogItem 
+          key={product.id}
+          product={product} 
+        />
+      ))}
     </main>
   );
 }

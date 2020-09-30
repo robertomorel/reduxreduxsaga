@@ -61,10 +61,7 @@ describe('CatalogItem component', () => {
       />,
     )
 
-    //const spy = jest.spyOn(React, 'useCallback');
-
     const buttonElement = getByPlaceholderText('Comprar');
-    console.log("inputElement: " + buttonElement);
     
     expect(fireEvent.click(buttonElement)).toBeTruthy();
   });
