@@ -9,7 +9,7 @@ interface ICatalogItemProps {
 }
 
 const CatalogItem: React.FC<ICatalogItemProps> = ({ product }) => {
-  console.log(JSON.stringify(product, null, 2));
+  //console.log(JSON.stringify(product, null, 2));
   const dispatch = useDispatch();
   const hasFailedStockCheck = useSelector<IState, boolean>(state => {
     return state.cart.failedStockCheck.includes(product.id);

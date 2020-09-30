@@ -18,10 +18,12 @@ const Catalog: React.FC = () => {
     api.get('products').then(response => {
       setCatalog(response.data);
     })
-  }, []);
+  }, [catalog]);
 
   return (
-    <main>
+    <main
+      data-testid="catalog-container"
+    >
     <h1>Catalog</h1>
 
     {catalog.map(product => (
