@@ -1,4 +1,7 @@
-{
+{ "user": {
+    "name": "Collabing  Comunity",
+    "id": "1"
+  },
   "products": [
     {
       "id": 1,

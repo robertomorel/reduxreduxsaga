@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import { IProduct } from '../store/modules/cart/types';
 import CatalogItem from './CatalogItem';
+import { IUser } from '../store/modules/user/types';
+import { useSelector } from 'react-redux';
 
 const Catalog: React.FC = () => {
   /*
@@ -13,8 +15,21 @@ const Catalog: React.FC = () => {
   //console.log(state);
   */
   const [catalog, setCatalog] = useState<IProduct[]>([]);
+  const [user, setUser] = useState<IUser>();
+  const cachedUser = useSelector<IUser, String>(state => state.name);
 
   const findCatalog = () => {
+    api.get('products').then(response => {
+      setCatalog(response.data);
+    });
+  }
+
+  useEffect(() => {
+    findCatalog();
+  }, []);
+
+  const findUser = () => {
+    
     api.get('products').then(response => {
       setCatalog(response.data);
     });
